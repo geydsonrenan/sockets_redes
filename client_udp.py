@@ -8,10 +8,10 @@ def request_dns(name_server, dns_port):
     sock_client = socket(AF_INET, SOCK_DGRAM)
     sock_client.bind(("localhost", 52000))
     sock_client.sendto(msg.encode(), (name_server, dns_port))
-    msg_resp = sock_client.recvfrom(1024)
+    msg_resp , ip = sock_client.recvfrom(1024)
     sock_client.close()
-    print(msg_resp)
-    return msg_resp
+    print(msg_resp.decode())
+    return msg_resp.decode()
 
 server_port = request_dns(name_server, dns_port)
 print("Server On")
@@ -19,5 +19,5 @@ print("Server On")
 client = socket(AF_INET, SOCK_DGRAM)
 messagem = "informe o ano de nascimento"
 
-client.sendto(messagem.encode(), (name_server, server_port))
+client.sendto(messagem.encode(), (name_server, int(server_port)))
 client.close()
