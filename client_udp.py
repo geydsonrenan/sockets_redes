@@ -7,7 +7,7 @@ dns_port = 51009
 anos = ["06/10", "01/09", "19/03", "22/01", "29/12"]
 
 def request_dns(name_server, dns_port):
-    msg = f"request,{name_server}, UDP"
+    msg = f"request,{name_server},UDP"
     sock_client = socket(AF_INET, SOCK_DGRAM)
     sock_client.bind(("localhost", 52000))
     sock_client.sendto(msg.encode(), (name_server, dns_port))
