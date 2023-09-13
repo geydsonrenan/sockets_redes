@@ -71,4 +71,4 @@ while 42:
     sck_client = sck_client.decode().split("/")
     msg = dic_mes[sck_client[1]] + " " + dic_dia[sck_client[0]]
     server.sendto(msg.encode(), address)
-    
+server.close()
