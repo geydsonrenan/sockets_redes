@@ -64,12 +64,23 @@ def conection_dns(name_serv, serv_port, dns_name, dns_port):
     
 conection_dns(servername, serverport, name_dns, dns_port)
 # mudar isso: 
-serversocket = socket(AF_INET, SOCK_STREAM)
-serversocket.bind((servername, serverport))
-serversocket.listen(5)
+#serversocket = socket(AF_INET, SOCK_STREAM)
+#serversocket.bind((servername, serverport))
+#serversocket.listen(5)
 
 while 42:
+    serversocket = socket(AF_INET, SOCK_STREAM)
+    serversocket.bind((servername, serverport))
+    serversocket.listen(1)
     sck_client, address = serversocket.accept()
+    msg = sck_client.recv(1024)
+    print(msg.decode())
+    msg = msg.decode().split('/')
+    resp = dic_mes[msg[1]] + ' ' + dic_dia[msg[0]]
+    serversocket.close()
     while 42:
-        msg = sck_client.recv(1024)
-        print(msg.decode())
+        serversocket = socket(AF_INET, SOCK_STREAM)
+        serversocket.connect((msg[2], int(msg[3])))
+        serversocket.send(resp.encode())
+        serversocket.close()
+        break
