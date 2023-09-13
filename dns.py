@@ -17,9 +17,7 @@ while 42:
     
     if msg[0] == "gravar":
         dns[msg[1]] = msg[2]
-        print(ip)
         print(f"registrou o {msg[1]} no DNS")
-        print(dns)    
     
     elif msg[0] == "request":
         if msg[1] in dns:
