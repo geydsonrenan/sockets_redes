@@ -55,7 +55,7 @@ dic_mes = {
 }
 
 def conection_dns(name_serv, serv_port, dns_name, dns_port):
-    msg = f'gravar,{name_serv},{serv_port}'
+    msg = f'gravar,{name_serv},{serv_port},UDP'
     sock_serv = socket(AF_INET, SOCK_DGRAM)
     sock_serv.sendto(msg.encode(), (dns_name, dns_port))
     sock_serv.close()
@@ -72,3 +72,4 @@ while 42:
     msg = dic_mes[sck_client[1]] + " " + dic_dia[sck_client[0]]
     server.sendto(msg.encode(), address)
 server.close()
+    
