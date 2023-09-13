@@ -2,7 +2,7 @@ from socket import *
 
 dns = {}
 
-name = "127.0.0.1"
+name = "localhost"
 port = 51009
 
 server = socket(AF_INET, SOCK_DGRAM)
