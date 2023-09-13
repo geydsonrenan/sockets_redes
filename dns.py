@@ -6,8 +6,9 @@ name = "localhost"
 port = 51009
 
 server = socket(AF_INET, SOCK_DGRAM)
-
+print("Starting Server...")
 server.bind((name, port))
+print("Server ON")
 
 while 42:
     msg, ip = server.recvfrom(1024)
