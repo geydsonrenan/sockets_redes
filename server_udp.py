@@ -6,8 +6,6 @@ server_port = 51001
 name_dns = "localhost"
 dns_port = 51009
 
-print('SERVER ON')
-
 dic_dia = {
     "01": "DO MORRO",
     "02": "DO BAILE",
@@ -63,6 +61,7 @@ def conection_dns(name_serv, serv_port, dns_name, dns_port):
     sock_serv.close()
     
 conection_dns(name_server, server_port, name_dns, dns_port)
+print('SERVER ON!')
 server = socket(AF_INET, SOCK_DGRAM)
 server.bind((name_server, server_port))
 
