@@ -57,7 +57,7 @@ dic_mes = {
 }
 
 def conection_dns(name_serv, serv_port, dns_name, dns_port):
-    msg = f'gravar,{name_serv},{serv_port}'
+    msg = f'gravar,{name_serv},{serv_port},TCP'
     sock_serv = socket(AF_INET, SOCK_DGRAM)
     sock_serv.sendto(msg.encode(), (dns_name, dns_port))
     sock_serv.close()
@@ -74,7 +74,6 @@ while 42:
     serversocket.listen(1)
     sck_client, address = serversocket.accept()
     msg = sck_client.recv(1024)
-    print(msg.decode())
     msg = msg.decode().split('/')
     resp = dic_mes[msg[1]] + ' ' + dic_dia[msg[0]]
     serversocket.close()
