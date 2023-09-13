@@ -16,10 +16,10 @@ def request_dns(name_server, dns_port):
     return msg_resp.decode()
 
 server_port = request_dns(name_server, dns_port)
-print("Server On")
+print("Server ON!")
 
 client = socket(AF_INET, SOCK_DGRAM)
-messagem = "informe o ano de nascimento"
+messagem = "informe o ano de nascimento.."
 
 client.bind(("localhost", 52000))
 client.sendto(anos[0].encode(), (name_server, int(server_port)))
