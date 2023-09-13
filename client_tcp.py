@@ -1,5 +1,6 @@
 from socket import *
 import time
+tempo_inicial = time.perf_counter()
 
 name_server = "localhost"
 dns_port = 51009
@@ -7,7 +8,7 @@ dns_port = 51009
 anos  = ["06/10", "01/09", "19/03", "22/01", "29/12"]
 
 def request_dns(name_server, dns_port):
-    msg = f"request,{name_server}, UDP"
+    msg = f"request,{name_server},TCP"
     sock_client = socket(AF_INET, SOCK_DGRAM)
     sock_client.bind(("localhost", 53000))
     sock_client.sendto(msg.encode(), (name_server, dns_port))
