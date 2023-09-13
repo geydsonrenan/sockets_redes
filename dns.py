@@ -12,6 +12,7 @@ print("Server ON")
 
 while 42:
     msg, ip = server.recvfrom(1024)
+    print(msg)
     msg = msg.decode()
     msg = msg.split(',')
     
@@ -19,11 +20,12 @@ while 42:
         dns[msg[1]] = msg[2]
         print(ip)
         print(f"registrou o {msg[1]} no DNS")
-        print(dns)
-    else:
-        msg[0] == "search"
-        if msg[1] in dns:
+        print(dns)    
+    
+    elif msg[0] == "request":
+        if dns[msg[1]]:
+            server.sendto(dns[msg[1]].encode(), ip)
             print(dns[msg[1]])
         else:
             print("DNS não encontrado")
-        
+            
