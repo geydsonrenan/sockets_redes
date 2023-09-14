@@ -1,12 +1,12 @@
 from socket import *
 
-servername = 'localhost'
+servername = gethostname()
 serverport = 55080
+nome_fic = "seunomepornascimento.app"
 
 name_dns = "localhost"
 dns_port = 51009
 
-print('SERVER ON')
 
 dic_dia = {
     "01": "DO MORRO",
@@ -56,17 +56,27 @@ dic_mes = {
     "12": "MAICÃO",     
 }
 
-def conection_dns(name_serv, serv_port, dns_name, dns_port):
-    msg = f'gravar,{name_serv},{serv_port},TCP'
+def conection_dns(name_serv, serv_port, dns_name, dns_port, nome_fic):
+    msg = f'gravar,{name_serv},{serv_port},{nome_fic},TCP'
     sock_serv = socket(AF_INET, SOCK_DGRAM)
     sock_serv.sendto(msg.encode(), (dns_name, dns_port))
+    resp, address = sock_serv.recvfrom(1024)
+    print(resp.decode())
+    sock_serv.close()
+def conection_delete_dns(nome_fic, dns_name, dns_port):
+    msg = f'delete,{nome_fic},TCP'
+    sock_serv = socket(AF_INET, SOCK_DGRAM)
+    sock_serv.sendto(msg.encode(), (dns_name, dns_port))
+    resp, address = sock_serv.recvfrom(1024)
+    print(resp.decode())
     sock_serv.close()
     
-conection_dns(servername, serverport, name_dns, dns_port)
+conection_dns(servername, serverport, name_dns, dns_port, nome_fic)
 # mudar isso: 
 serversocket = socket(AF_INET, SOCK_STREAM)
 serversocket.bind((servername, serverport))
 serversocket.listen(5)
+print('SERVER TCP ON!')
 sck_client, address = serversocket.accept()
 
 while 42:
@@ -78,3 +88,4 @@ while 42:
     except:
         break
 serversocket.close()
+conection_delete_dns(nome_fic, name_dns, dns_port) 
