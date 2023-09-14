@@ -1,7 +1,8 @@
 from socket import *
 
-name_server = 'localhost'
+name_server = gethostname()
 server_port = 51001
+nome_fic = "seunomepornascimento.app"
 
 name_dns = "localhost"
 dns_port = 51009
@@ -54,14 +55,23 @@ dic_mes = {
     "12": "MAICÃO",     
 }
 
-def conection_dns(name_serv, serv_port, dns_name, dns_port):
-    msg = f'gravar,{name_serv},{serv_port},UDP'
+def conection_dns(name_serv, serv_port, dns_name, dns_port, nome_fic):
+    msg = f'gravar,{name_serv},{serv_port},{nome_fic},UDP'
     sock_serv = socket(AF_INET, SOCK_DGRAM)
     sock_serv.sendto(msg.encode(), (dns_name, dns_port))
+    resp, address = sock_serv.recvfrom(1024)
+    print(resp.decode())
+    sock_serv.close()
+def conection_delete_dns(nome_fic, dns_name, dns_port):
+    msg = f'delete,{nome_fic},UDP'
+    sock_serv = socket(AF_INET, SOCK_DGRAM)
+    sock_serv.sendto(msg.encode(), (dns_name, dns_port))
+    resp, address = sock_serv.recvfrom(1024)
+    print(resp.decode())
     sock_serv.close()
     
-conection_dns(name_server, server_port, name_dns, dns_port)
-print('SERVER ON!')
+conection_dns(name_server, server_port, name_dns, dns_port, nome_fic)
+print('SERVER UDP ON!')
 server = socket(AF_INET, SOCK_DGRAM)
 server.bind((name_server, server_port))
 
@@ -71,5 +81,10 @@ while 42:
     sck_client = sck_client.decode().split("/")
     msg = dic_mes[sck_client[1]] + " " + dic_dia[sck_client[0]]
     server.sendto(msg.encode(), address)
+    if int(sck_client[-1]) <= 0:
+        break
 server.close()
+conection_delete_dns(nome_fic, name_dns, dns_port)
+
+
     
